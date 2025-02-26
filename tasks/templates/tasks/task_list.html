@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Tasks - Task Manager{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <!-- Header Section -->
+    <div class="md:flex md:items-center md:justify-between mb-6">
+        <div class="flex-1 min-w-0">
+            <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Tasks</h2>
+        </div>
+        <div class="mt-4 flex md:mt-0 md:ml-4">
+            <a href="{% url 'tasks:task_create' %}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+                New Task
+            </a>
+        </div>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="bg-white p-4 rounded-lg shadow-sm mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <select class="form-select rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <option>All Priorities</option>
+                <option>High</option>
+                <option>Medium</option>
+                <option>Low</option>
+            </select>
+            <select class="form-select rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <option>All Statuses</option>
+                <option>Started</option>
+                <option>In Progress</option>
+                <option>Completed</option>
+            </select>
+            <select class="form-select rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <option>All Projects</option>
+                <option>Project 1</option>
+                <option>Project 2</option>
+            </select>
+            <div class="relative">
+                <input type="text" placeholder="Search tasks..." class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            </div>
+        </div>
+    </div>
+
+    <!-- Tasks Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for task in tasks %}
+        <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="px-2 py-1 text-xs font-semibold rounded-full
+                        {% if task.priority == 'High' %}bg-red-100 text-red-800
+                        {% elif task.priority == 'Medium' %}bg-yellow-100 text-yellow-800
+                        {% else %}bg-green-100 text-green-800{% endif %}">
+                        {{ task.priority }}
+                    </span>
+                    <span class="px-2 py-1 text-xs font-semibold rounded-full
+                        {% if task.status == 'Completed' %}bg-green-100 text-green-800
+                        {% elif task.status == 'In Progress' %}bg-blue-100 text-blue-800
+                        {% else %}bg-gray-100 text-gray-800{% endif %}">
+                        {{ task.status }}
+                    </span>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ task.title }}</h3>
+                <p class="text-gray-600 mb-4 line-clamp-2">{{ task.description }}</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-500">Due: {{ task.due_date|date:"M d, Y" }}</span>
+                    <a href="{% url 'tasks:task_detail' task.id %}" class="text-indigo-600 hover:text-indigo-700 text-sm font-medium">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-span-full text-center py-12">
+            <h3 class="text-lg font-medium text-gray-900 mb-2">No tasks found</h3>
+            <p class="text-gray-500">Create a new task to get started.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Task Manager{% endblock %}</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Add Alpine.js for mobile menu functionality -->
+    <script src="https://unpkg.com/alpinejs" defer></script>
+</head>
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-lg" x-data="{ isOpen: false }">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <!-- Logo and Primary Nav -->
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="/" class="text-xl font-bold text-indigo-600">Task Manager</a>
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="/" class="inline-flex items-center px-1 pt-1 text-gray-900 hover:text-indigo-600">Home</a>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'tasks:task_list' %}" class="inline-flex items-center px-1 pt-1 text-gray-500 hover:text-indigo-600">Tasks</a>
+                            <a href="{% url 'tasks:task_create' %}" class="inline-flex items-center px-1 pt-1 text-gray-500 hover:text-indigo-600">New Task</a>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="flex items-center md:hidden">
+                    <button @click="isOpen = !isOpen" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100">
+                        <svg class="h-6 w-6" x-show="!isOpen" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg class="h-6 w-6" x-show="isOpen" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Desktop Auth Links -->
+                <div class="hidden md:flex md:items-center md:ml-6">
+                    {% if user.is_authenticated %}
+                        <span class="text-gray-600 px-3 py-2">Welcome, {{ user.username }}</span>
+                        {% if user.userprofile.role == 'ADMIN' %}
+                            <span class="text-sm text-indigo-600">(Admin)</span>
+                            <a href="{% url 'admin:index' %}" class="text-indigo-600 hover:text-indigo-800 px-3 py-2 ml-2">Admin Panel</a>
+                        {% endif %}
+                        <a href="{% url 'tasks:logout' %}" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 ml-4">Logout</a>
+                    {% else %}
+                        <a href="{% url 'tasks:login' %}" class="text-gray-600 hover:text-indigo-600 px-3 py-2">Login</a>
+                        <a href="{% url 'tasks:register' %}" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Register</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="md:hidden" x-show="isOpen">
+                <div class="pt-2 pb-3 space-y-1">
+                    <a href="/" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50">Home</a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'tasks:task_list' %}" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50">Tasks</a>
+                        <a href="{% url 'tasks:task_create' %}" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50">New Task</a>
+                    {% endif %}
+                </div>
+                <div class="pt-4 pb-3 border-t border-gray-200">
+                    <div class="flex items-center px-4 space-x-3">
+                        {% if user.is_authenticated %}
+                            <span class="block text-base font-medium text-gray-700">{{ user.username }}</span>
+                            {% if user.userprofile.role == 'ADMIN' %}
+                                <span class="text-sm text-indigo-600">(Admin)</span>
+                                <a href="{% url 'admin:index' %}" class="block text-base font-medium text-indigo-600 hover:text-indigo-800">Admin Panel</a>
+                            {% endif %}
+                            <a href="{% url 'tasks:logout' %}" class="block text-base font-medium bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700">Logout</a>
+                        {% else %}
+                            <a href="{% url 'tasks:login' %}" class="block text-base font-medium text-gray-700 hover:text-indigo-600">Login</a>
+                            <a href="{% url 'tasks:register' %}" class="block text-base font-medium bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Register</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>
