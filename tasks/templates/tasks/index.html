@@ -3,35 +3,158 @@
 {% block title %}Welcome to Task Manager{% endblock %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto">
-    <div class="text-center">
-        <h1 class="text-4xl font-bold text-gray-900 mb-4">Welcome to Task Manager</h1>
-        <p class="text-xl text-gray-600 mb-8">Organize your tasks efficiently and boost your productivity</p>
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Feature 1 -->
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">Task Organization</h3>
-                <p class="text-gray-600">Create and manage tasks with ease using our intuitive interface</p>
+<!-- Hero Section -->
+<div class="bg-white dark:bg-gray-900">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16">
+        <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Task Management Made Simple</h1>
+        <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-400">Organize, track, and manage your tasks efficiently with our intuitive task management platform.</p>
+        <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
+            {% if user.is_authenticated %}
+                <a href="{% url 'tasks:task_list' %}" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
+                    View Tasks
+                    <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                    </svg>
+                </a>
+                <a href="{% url 'tasks:task_create' %}" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                    Create New Task
+                </a>
+            {% else %}
+                <a href="{% url 'tasks:register' %}" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
+                    Get started
+                    <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                    </svg>
+                </a>
+                <a href="{% url 'tasks:login' %}" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                    Sign In
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Feature Section -->
+<div class="bg-gray-50 dark:bg-gray-800">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16">
+        <div class="max-w-screen-md mb-8 lg:mb-16">
+            <h2 class="mb-4 text-4xl font-extrabold text-gray-900 dark:text-white">Designed for business teams like yours</h2>
+            <p class="text-gray-500 sm:text-xl dark:text-gray-400">Here at Task Manager we focus on helping teams work more efficiently and effectively.</p>
+        </div>
+        <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
+            <div class="flex flex-col items-center">
+                <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-blue-100 lg:h-12 lg:w-12 dark:bg-blue-900">
+                    <svg class="w-5 h-5 text-blue-600 lg:w-6 lg:h-6 dark:text-blue-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"></path>
+                    </svg>
+                </div>
+                <h3 class="mb-2 text-xl font-bold dark:text-white">Task Tracking</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-center">Keep track of your tasks with our intuitive interface and real-time updates.</p>
             </div>
-            
-            <!-- Feature 2 -->
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">Team Collaboration</h3>
-                <p class="text-gray-600">Work together with your team members efficiently</p>
+            <div class="flex flex-col items-center">
+                <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-blue-100 lg:h-12 lg:w-12 dark:bg-blue-900">
+                    <svg class="w-5 h-5 text-blue-600 lg:w-6 lg:h-6 dark:text-blue-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path>
+                    </svg>
+                </div>
+                <h3 class="mb-2 text-xl font-bold dark:text-white">Team Collaboration</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-center">Work seamlessly with your team members and share tasks efficiently.</p>
             </div>
-            
-            <!-- Feature 3 -->
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">Progress Tracking</h3>
-                <p class="text-gray-600">Monitor task progress and stay on top of deadlines</p>
+            <div class="flex flex-col items-center">
+                <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-blue-100 lg:h-12 lg:w-12 dark:bg-blue-900">
+                    <svg class="w-5 h-5 text-blue-600 lg:w-6 lg:h-6 dark:text-blue-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                    </svg>
+                </div>
+                <h3 class="mb-2 text-xl font-bold dark:text-white">Project Management</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-center">Organize tasks by projects and track progress with ease.</p>
             </div>
         </div>
-        
-        <div class="mt-12">
-            <a href="#" class="bg-indigo-600 text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-indigo-700 transition-colors duration-200">
-                Get Started
-            </a>
+    </div>
+</div>
+
+<!-- Statistics Section -->
+<div class="bg-white dark:bg-gray-900">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16">
+        <div class="max-w-screen-md mb-8 lg:mb-16">
+            <h2 class="mb-4 text-4xl font-extrabold text-gray-900 dark:text-white">Trusted by teams worldwide</h2>
+            <p class="text-gray-500 sm:text-xl dark:text-gray-400">Our platform helps teams stay organized and productive.</p>
+        </div>
+        <div class="grid grid-cols-2 gap-8 text-gray-500 sm:gap-12 md:grid-cols-3 lg:grid-cols-4 dark:text-gray-400">
+            <div class="flex justify-center items-center">
+                <div class="flex flex-col items-center">
+                    <dt class="mb-2 text-3xl font-extrabold">73K+</dt>
+                    <dd class="text-gray-500 dark:text-gray-400">Developers</dd>
+                </div>
+            </div>
+            <div class="flex justify-center items-center">
+                <div class="flex flex-col items-center">
+                    <dt class="mb-2 text-3xl font-extrabold">100+</dt>
+                    <dd class="text-gray-500 dark:text-gray-400">Companies</dd>
+                </div>
+            </div>
+            <div class="flex justify-center items-center">
+                <div class="flex flex-col items-center">
+                    <dt class="mb-2 text-3xl font-extrabold">250M+</dt>
+                    <dd class="text-gray-500 dark:text-gray-400">Tasks completed</dd>
+                </div>
+            </div>
+            <div class="flex justify-center items-center">
+                <div class="flex flex-col items-center">
+                    <dt class="mb-2 text-3xl font-extrabold">4M+</</dt>
+                    <dd class="text-gray-500 dark:text-gray-400">Organizations</dd>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FAQ Section -->
+<div class="bg-gray-50 dark:bg-gray-800">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16">
+        <h2 class="mb-8 text-4xl font-extrabold text-gray-900 dark:text-white">Frequently asked questions</h2>
+        <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
+            <h2 id="accordion-flush-heading-1">
+                <button type="button" class="flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-1" aria-expanded="true" aria-controls="accordion-flush-body-1">
+                    <span>What is Task Manager?</span>
+                    <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
+                    </svg>
+                </button>
+            </h2>
+            <div id="accordion-flush-body-1" class="hidden" aria-labelledby="accordion-flush-heading-1">
+                <div class="py-5 border-b border-gray-200 dark:border-gray-700">
+                    <p class="mb-2 text-gray-500 dark:text-gray-400">Task Manager is a comprehensive project management tool designed to help teams organize, track, and complete tasks efficiently.</p>
+                </div>
+            </div>
+
+            <h2 id="accordion-flush-heading-2">
+                <button type="button" class="flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-2" aria-expanded="false" aria-controls="accordion-flush-body-2">
+                    <span>How can I get started?</span>
+                    <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
+                    </svg>
+                </button>
+            </h2>
+            <div id="accordion-flush-body-2" class="hidden" aria-labelledby="accordion-flush-heading-2">
+                <div class="py-5 border-b border-gray-200 dark:border-gray-700">
+                    <p class="mb-2 text-gray-500 dark:text-gray-400">Getting started is easy! Simply create an account, and you can begin creating and managing tasks right away.</p>
+                </div>
+            </div>
+
+            <h2 id="accordion-flush-heading-3">
+                <button type="button" class="flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-3" aria-expanded="false" aria-controls="accordion-flush-body-3">
+                    <span>Is there a free plan available?</span>
+                    <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
+                    </svg>
+                </button>
+            </h2>
+            <div id="accordion-flush-body-3" class="hidden" aria-labelledby="accordion-flush-heading-3">
+                <div class="py-5 border-b border-gray-200 dark:border-gray-700">
+                    <p class="mb-2 text-gray-500 dark:text-gray-400">Yes! We offer a generous free tier that includes all the essential features you need to manage your tasks effectively.</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
