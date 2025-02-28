@@ -122,3 +122,4 @@ def task_create(request):
         'projects': projects,
         'users': users
     })
+# Added toast auto-dismiss timing
