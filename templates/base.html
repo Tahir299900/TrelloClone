@@ -71,6 +71,9 @@
                             <li>
                                 <a href="{% url 'admin:index' %}" class="block py-2 pl-3 pr-4 text-blue-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-blue-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Admin Panel</a>
                             </li>
+                            <li>
+                                <a href="{% url 'tasks:project_list' %}" class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Projects</a>
+                            </li>
                         {% endif %}
                         <li>
                             <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex items-center justify-between w-full py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-gray-400 md:dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">
@@ -100,7 +103,7 @@
 
     <!-- Messages -->
     {% if messages %}
-    <div id="toast-container" class="fixed flex flex-col gap-3 top-5 right-5 z-50">
+    <div id="toast-container" class="fixed flex flex-col gap-3 top-20 right-5 z-50">
         {% for message in messages %}
             {% if message.tags == 'error' %}
                 <div id="toast-error-{{ forloop.counter }}" class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow-sm dark:text-gray-400 dark:bg-gray-800" role="alert">
