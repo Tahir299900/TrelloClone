@@ -29,8 +29,11 @@ def register_view(request):
             else:
                 user_role = UserProfile.Role.STANDARD
             
-            # Create associated UserProfile
-            UserProfile.objects.create(user=user, role=user_role)
+            # Create or get associated UserProfile
+            UserProfile.objects.get_or_create(
+                user=user,
+                defaults={'role': user_role}
+            )
             login(request, user)
             messages.success(request, f'Account created successfully! Welcome {user.username}!')
             return redirect('tasks:task_list')
